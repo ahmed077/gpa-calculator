@@ -19,10 +19,10 @@ function addSubject() {
         labels = $('#labels label');
     for (i = 0; i < labels.length; i++) {
         formGroup = $('<div>', {
-            'class': 'form-group ' + $('label').eq(i)[0].className.substring(
-                $('label').eq(i)[0].className.search("col"),
-                $('label').eq(i)[0].className.search(/\d/,
-                    $('label').eq(i)[0].className.search("col")) + 1
+            'class': 'form-group ' + labels.eq(i)[0].className.substring(
+                labels.eq(i)[0].className.search("col"),
+                labels.eq(i)[0].className.search(/\d/,
+                    labels.eq(i)[0].className.search("col")) + 1
             )
         });
 //        grid = labels[i].className.split(" ");
