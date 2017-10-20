@@ -57,7 +57,7 @@ $(function () {
              ###
      *******************/
     //Edits
-    $('#custom-select').on('click', function (e) {
+    $('#custom-select, .select-box i').on('click', function (e) {
         customSelect($('#custom-select'));
     });
     $('#custom-select li').not('.selected').on('click', function (e) {
@@ -66,8 +66,6 @@ $(function () {
         x.addClass('current');
         $('.selected').data('target', x.data('target')).text(x.text());
         //toggle forms
-//        $(':selected').removeAttr('selected');
-//        $("option[value='" + $('li.current').data('target') + "']").attr('selected', 'selected');
         $('select').val($('li.current').data('target'));
     });
 });
