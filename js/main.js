@@ -18,23 +18,17 @@ function addSubject() {
         }),
         labels = $('#labels label');
     for (i = 0; i < labels.length; i++) {
-        formGroup = $('<div>', {
-            'class': 'form-group ' + $('label').eq(i)[0].className.substring(
-                $('label').eq(i)[0].className.search("col"),
-                $('label').eq(i)[0].className.search(/\d/,
-                    $('label').eq(i)[0].className.search("col")) + 1
-            )
-        });
-//        grid = labels[i].className.split(" ");
+        formGroup = $('<div>', {'class': 'form-group'});
+        grid = labels[i].className.split(" ");
         input = $('<input>', {
             "type": "text",
             'class': 'form-control',
             'required': 'required',
             'placeholder': $(".row").eq(3).children('.form-group').eq(i).children('input').attr('placeholder')
         });
-//        grid.forEach(function (x) {
-//            ((/^col/).test(x)) ? formGroup.addClass(x) : null;
-//        });
+        grid.forEach(function (x) {
+            ((/^col/).test(x)) ? formGroup.addClass(x) : null;
+        });
         row.append(formGroup.append(input));
     }
     row.append($('<div>', {
