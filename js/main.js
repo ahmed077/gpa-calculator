@@ -66,6 +66,9 @@ $(function () {
         x.addClass('current');
         $('.selected').data('target', x.data('target')).text(x.text());
         //toggle forms
+//        $(':selected').removeAttr('selected');
+//        $("option[value='" + $('li.current').data('target') + "']").attr('selected', 'selected');
+        $('select').val($('li.current').data('target'));
     });
 });
 /********************
