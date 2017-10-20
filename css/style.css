@@ -65,7 +65,27 @@ form.box{
 .select-box {
     position: relative;
 }
-.select-box select,
+   /********************
+            ###
+    *******************/
+.select-box ul{
+    height: auto;
+    trnsition: height 0.5s ease-in-out;
+}
+.select-box li{
+    padding:10px 0 10px 10px;
+    cursor: pointer;
+}
+.select-box li:hover {
+    background-image:linear-gradient(to right, #fdfdfd, #fafafa)
+}
+.select-box li.current {
+    background-image:linear-gradient(to bottom, #fcfcfc, #f1f1f1)
+}
+   /********************
+            ###
+    *******************/
+/*.select-box select,*/
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button
 {
@@ -78,16 +98,25 @@ input[type=number]{
 }
 .select-box i{
     position: absolute;
-    top:3px;
-    right:23px;
+    top:13px;
+    right:30px;
     transition:all 0.5s ease-in-out;
 }
+   /********************
+            ###
+    *******************/
+/*Edit*/
+/*
 .select-box i.active{
     transform:rotateZ(180deg);
 }
-.select-box select option {
-    padding:5px 15px;
+*/
+.select-box i.current{
+    transform:rotateZ(90deg);
 }
+   /********************
+            ###
+    *******************/
 .buttons div:first-of-type, .controls div:first-of-type{
     margin-right:5px
 }
