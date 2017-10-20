@@ -1,0 +1,94 @@
+body{background:#EEE;}
+.box {
+    padding:15px;
+    border-radius:10px;
+    background: white;
+}
+.flex{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+hr {margin-top:5px}
+a,a:hover,a:active{text-decoration: none;color:inherit}
+/*Base Classes*/
+/*Header Start*/
+header {
+    margin-bottom:40px;
+}
+nav .logo{
+    height:40px;
+}
+nav ul > li + li {
+    margin-left:20px;
+}
+nav li i {margin-right:3px}
+nav ul > li:last-of-type {
+    position:relative;
+}
+nav .img{
+    width:40px;
+    height:40px;
+    border-radius:3px;
+    background:#a777e3;
+    margin-right:5px;
+}
+nav ol{display:none}
+nav ol.box {
+    position: absolute;
+    right:0;
+    top:35px;
+    padding-right:0;
+    padding-left:0;
+}
+/*TODO: Put Profile Image and Caret At Top*/
+nav ol.active{display:block;}
+nav ol li {
+    padding:5px 10px;
+}
+nav ol li + li {
+    border-top:1px solid #ccc;
+}
+/*Header End*/
+@media(max-width:768px) {
+    nav ul {
+        flex-direction: column;
+    }
+    nav ul > li + li {
+        margin-left:0;
+        margin-top:10px;
+    }
+}
+form.box{
+    padding-top: 25px;
+}
+.select-box {
+    position: relative;
+}
+.select-box select,
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    background:none;
+}
+input[type=number]{
+    -moz-appearance: textfield;
+}
+.select-box i{
+    position: absolute;
+    top:3px;
+    right:23px;
+    transition:all 0.5s ease-in-out;
+}
+.select-box i.active{
+    transform:rotateZ(180deg);
+}
+.select-box select option {
+    padding:5px 15px;
+}
+.buttons div:first-of-type, .controls div:first-of-type{
+    margin-right:5px
+}
+
