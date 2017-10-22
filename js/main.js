@@ -3,7 +3,8 @@
 //TODO: 
 //#1 Toggle Forms Line:62
 //#2 Validation script
-var addSubject, customSelect,
+var addSubject, customSelect, clearInput, swapForms,
+//functions declaration
     clickStats = {},
     selectActive = false;
 $(function () {
@@ -67,6 +68,10 @@ $(function () {
         $('.selected').data('target', x.data('target')).text(x.text());
         //toggle forms
         $('select').val($('li.current').data('target'));
+        swapForms('../forms/' + $('li.current').data('target') + '.html');
+    });
+    $("#clear").on("click", function () {
+        clearInput();
     });
 });
 /********************
@@ -86,7 +91,7 @@ function customSelect(container) {
     };
     ul.toggleClass('active').animate({
         height: h
-    }, 800);
+    }, 400);
     if (selectActive) {
         i = lis.length;
         clickStats.show.hide();
@@ -106,6 +111,8 @@ function customSelect(container) {
         $(ul).siblings('i').removeClass('current').css('top', $(lis).eq(0).position().top + 6);
         selectActive = false;
     } else {
+        
+        $(ul).siblings('i').addClass('current').css('top', ($(lis).index($("li.current")) - 1) * lis.outerHeight() + $(lis).eq(1).position().top + 8);
         i = 2;
         intv = setInterval(function () {
             lis.eq(i).fadeIn(100, function () {
@@ -114,7 +121,7 @@ function customSelect(container) {
             i++;
             if (i === lis.length) {
                 clearInterval(intv);
-                $(ul).siblings('i').addClass('current').css('top', $("li.current").position().top + 6);
+                //$(ul).siblings('i').addClass('current').css('top', $("li.current").position().top + 6);
             }
         }, 200);
         selectActive = true;
@@ -139,6 +146,8 @@ function addSubject() {
         });
         row.append(formGroup.append(input));
     }
+//    var buttonContainer = $('.buttons').eq(0);
+//    var buttons = $('<div>',{'class':buttonContainer[0].className}).append(buttonContainer.children());
     row.append($('<div>', {'class': 'buttons col-xs-2'})
                .append(
             $('<div>', {'class': "btn btn-info pull-left"})
@@ -151,3 +160,21 @@ function addSubject() {
         ));
     $('#form-body').append('<hr>').append(row);
 }
+function clearInput() {
+    'use strict';
+    $(".row").eq(4).children().children('input').each(function () {
+        $(this).val("");
+    });
+}
+function swapForms(target) {
+    'use strict';
+    var XHR = new XMLHttpRequest();
+    XHR.open('GET', '../' + target, true);
+    XHR.send();
+    XHR.onreadystatechange = function () {
+        if (XHR.readyState === 4 && XHR.status === 200) {
+            $('#form-body').html(XHR.responseText);
+        }
+    };
+}
+/*--------validation----------*/
