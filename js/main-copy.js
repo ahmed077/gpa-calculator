@@ -3,6 +3,18 @@
 //TODO: 
 //#1 Validation script
 //#2 Integrating calculation functions
+var forms = [
+    {
+        value: 'Form1',
+        url: '../forms/default.html'
+    },
+    {
+        value: 'Form2',
+        url: '../forms/optionone.html'
+    }
+],
+    x = new SelectBox(true, document.getElementsByTagName('select')[0], 'swap', forms);
+// SelectBox(active, Original Select Box Element, TODO at select, forms array in case of swapping)
 var addSubject, clearInput;
 //functions declaration
 $(function () {
@@ -28,18 +40,6 @@ $(function () {
     $("#form-body").on("click", 'div#clear' , function (e) {
         clearInput($(e.target));
     });
-    var forms = [
-        {
-            value: 'Form1',
-            url: '../forms/default.html'
-        },
-        {
-            value: 'Form2',
-            url: '../forms/optionone.html'
-        }
-    ],
-        x = new SelectBox(true, document.getElementsByTagName('select')[0], 'swap', forms);
-    // SelectBox(active, Original Select Box Element, TODO at select, forms array in case of swapping)
 });
 function addSubject() {
     'use strict';
