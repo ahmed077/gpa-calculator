@@ -37,27 +37,20 @@
     <div class="container">
         <form method="post" class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 box">
             <div class="row">
-                <div class="form-group select-box col-md-12">
-                    <i class="fa fa-caret-down fa-2x"></i>
-                    <ul id="custom-select" class="list-unstyled form-control">
-                    </ul>
+                <div class="form-group col-sm-12">
+                    <select name="">
+                        <option value="default" selected>Marks to GPA</option>
+                        <option value="optionone">Hundred percent to GPA</option>
+                    </select>
                 </div>
-            </div>
-            <div class="row hidden">
-                <select name="" id="" class="form-control">
-                    <option value="default" selected>Default Form</option>
-                    <option value="optionone">Form One</option>
-                    <option value="optiontwo">Form Two</option>
-                    <option value="optionthree">Form Three</option>
-                </select>
             </div>
             <div class="row">
                 <div class="col-md-12" id="form-body">
                     <div class="row">
                         <div class="col-xs-12" id="labels">
                             <label class="control-label col-xs-4">Subject Name</label>
-                            <label class="control-label text-center col-xs-2">Degree</label>
-                            <label class="control-label text-center col-xs-2">Max Degree</label>
+                                <label class="control-label text-center col-xs-2">Degree</label>
+                                <label class="control-label text-center col-xs-2">Max Degree</label>
                             <label class="control-label text-center col-xs-2">Hours</label>
                         </div>
                     </div>
@@ -68,17 +61,17 @@
                             <input type="text" class="form-control" required placeholder="Ex: Math">
                         </div>
                         <div class="form-group col-xs-2">
-                            <input min="0" max="9999" type="number" class="form-control" required placeholder="yours">
+                            <input min="0" max="9999" type="number" class="form-control min" required placeholder="yours">
                         </div>
                         <div class="form-group col-xs-2">
-                            <input min="50" max="9999" type="number" class="form-control" required placeholder="max">
+                            <input  min="50" max="9999" type="number" class="form-control max" required placeholder="max">
                         </div>
                         <div class="form-group col-xs-2">
-                            <input type="text" class="form-control" required placeholder="CGPA">
+                            <input type="text" class="form-control" required placeholder="Ex: 4">
                         </div>
                         <div class="col-xs-2 buttons">
                             <div class="btn btn-info pull-left"><i class="fa fa-calculator"></i></div>
-                            <div class="btn btn-warning pull-left"><i class="fa fa-remove"></i></div>
+                            <div class="btn btn-warning pull-left" id="clear"><i class="fa fa-remove"></i></div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -92,6 +85,7 @@
         </form>
     </div>
 <script src="libs/jquery.min.js"></script>
-<script src="js/main.js"></script>
+<script src="js/customSelect.js"></script>
+<script src="js/main-copy.js"></script>
 </body>
 </html>
