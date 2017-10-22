@@ -31,11 +31,11 @@ $(function () {
     var forms = [
         {
             value: 'Form1',
-            url: '/forms/default.html'
+            url: window.location + '/forms/default.html'
         },
         {
             value: 'Form2',
-            url: '/forms/optionone.html'
+            url: window.location + '/forms/optionone.html'
         }
     ],
         x = new SelectBox(true, document.getElementsByTagName('select')[0], 'swap', forms);
