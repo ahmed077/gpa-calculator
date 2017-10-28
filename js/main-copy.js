@@ -13,11 +13,11 @@ $(function () {
         forms = [
             {
                 value: 'Form1',
-                url: '../forms/default.html'
+                url: './forms/default.html'
             },
             {
                 value: 'Form2',
-                url: '../forms/optionone.html'
+                url: './forms/optionone.html'
             }
         ],
         x = new SelectBox(true, document.getElementsByTagName('select')[0], 'swap', forms);
