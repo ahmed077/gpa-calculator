@@ -66,7 +66,7 @@ function clearInput(btn) {
     btn.parentsUntil('.row').parent().children().children('input').each(function () {
         $(this).val("");
     });
-    closeAlert(btn.parent().siblings('.messages').children());//edit
+    closeAlert(btn.parentsUntil('.row').siblings('.messages').children());//edit
 }
 /*--------mini calculate----------*/
 $("#form-body").on("click", 'div.mini-calculate', function (e) {
