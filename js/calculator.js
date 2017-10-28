@@ -140,7 +140,7 @@ function calcPercent(current, max) {
         minRes = current.parent().siblings(".messages").children('.mini-result'),
         result;
     if (n.length === 0 || x.length === 0) {
-        alertMessage(err, "You must enter to value to calculate.", 'danger', minRes);
+        alertMessage(err, "You must enter two value to calculate.", 'danger', minRes);
         return null;
     } else if (isNaN(n) || isNaN(x)) {
         alertMessage(err, "Only numeric values are allowed.", 'danger', minRes);
