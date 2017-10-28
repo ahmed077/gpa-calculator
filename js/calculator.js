@@ -130,7 +130,6 @@ function closeAlert(div) {
 function alertMessage(div, message, type, close) {
     'use strict';
     div.slideUp(0).text(message).addClass('alert').addClass('alert-' + type).slideDown();
-//  err.slideUp(0).addClass('alert').addClass('alert-danger').text("your current value must be not bigger than max value.").slideDown();
     closeAlert(close);//this close the other message
 }//edit
 function calcPercent(current, max) {
