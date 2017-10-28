@@ -1,4 +1,4 @@
-/*global jQuery, console, $, alert*/
+/*global jQuery, console, $, alert, SelectBox, calcPercent, closeAlert*/
 /*jslint plusplus:true*/
 //TODO: 
 //#1 Validation script
@@ -9,7 +9,18 @@ $(function () {
     'use strict';
     var i,
         ul = $('#custom-select'),
-        options = $('option');
+        options = $('option'),
+        forms = [
+            {
+                value: 'Form1',
+                url: '../forms/default.html'
+            },
+            {
+                value: 'Form2',
+                url: '../forms/optionone.html'
+            }
+        ],
+        x = new SelectBox(true, document.getElementsByTagName('select')[0], 'swap', forms);
     $('#sub-list').on('click', function (e) {
         e.preventDefault();
         $('nav ol').toggleClass('active');
@@ -25,54 +36,43 @@ $(function () {
         //run validation script
         e.preventDefault();
     });
-    $("#form-body").on("click", 'div#clear' , function (e) {
+    $("#form-body").on("click", 'div#clear', function (e) {
         clearInput($(e.target));
     });
-    var forms = [
-        {
-            value: 'Form1',
-            url: window.location + '/forms/default.html'
-        },
-        {
-            value: 'Form2',
-            url: window.location + '/forms/optionone.html'
-        }
-    ],
-        x = new SelectBox(true, document.getElementsByTagName('select')[0], 'swap', forms);
     // SelectBox(active, Original Select Box Element, TODO at select, forms array in case of swapping)
 });
+
 function addSubject() {
     'use strict';
-    var i, formGroup, grid, input, c,
-        row = $('<div>', {'class': 'row'}),
-        labels = $('#labels label');
-    for (i = 0; i < labels.length; i++) {
-        c = labels.eq(i)[0].className;
-        formGroup = $('<div>', {
-            'class': 'form-group ' + c.substring(c.search("col"), c.search(/\d/, c.search("col")) + 1)
-        });
-        input = $('<input>', {
-            "type": "text",
-            'class': 'form-control',
-            'required': 'required',
-            'placeholder': $(".row").last().children('.form-group').eq(i).children('input').attr('placeholder')
-        });
-        row.append(formGroup.append(input));
-    }
-    var cloned = $('.buttons').eq(0).clone();
-    cloned.children().each(function () {
-        if ($(this)[0].id) {
-            $(this)[0].id = "";
+    var row = $('#form-body .row').eq(1).clone();
+    row.children().children().each(function () {
+        var th = $(this);
+        if (th.hasClass('alert')) {
+            th.removeClass('alert').removeClass('alert-danger').removeClass('alert-success');
+        } else if (th.hasClass('btn-warning')) {
+            th[0].id = "";
+            th[0].className = th[0].className.replace('warning', 'danger') + ' remove';
         }
-        $(this)[0].className = $(this)[0].className.replace('warning', 'danger') + ' remove';
+        th.val("");
     });
-    row.append(cloned);
+    row.children('.messages').children().each(function () {
+        $(this).text("");
+    });
     $('#form-body').append('<hr>').append(row);
 }
+
 function clearInput(btn) {
     'use strict';
     btn.parentsUntil('.row').parent().children().children('input').each(function () {
         $(this).val("");
     });
+    closeAlert(btn.parent().siblings('.messages').children());//edit
 }
-/*--------validation----------*/
+/*--------mini calculate----------*/
+$("#form-body").on("click", 'div.mini-calculate', function (e) {
+    'use strict';
+    var sibs = $(this).parent().siblings(),
+        current = sibs.children(".min"),
+        max = sibs.children(".max");
+    calcPercent(current, max);
+});
