@@ -9,52 +9,56 @@ function SelectBox(generate, selectbox, clickEvent, forms) {
     this.forms = forms || [];
     this.container = generate ? customSelectGenerator($(selectbox), this.clickEvent, this.forms) : null;
 }
+
 function customSelectGenerator(selectBox, clickEvent, forms) {
     'use strict';
-//    Hiding the original select box
+    //    Hiding the original select box
     selectBox.hide();
-//    declaring variables
-    var clickStats = {},//object which will contain properties of what to do at events
+    //    declaring variables
+    var clickStats = {}, //object which will contain properties of what to do at events
         //creating new select box container
         customSelect = $("<ul>", {
             id: 'custom-select',
             'class': selectBox[0].className + ' list-unstyled form-control input-lg'
         }),
         //caret down from font awesome 4.7
-        caret = $("<i>", {'class': 'fa fa-caret-down fa-2x'});
+        caret = $("<i>", {
+            'class': 'fa fa-caret-down fa-2x'
+        });
     //creating the default option
     customSelect.append($('<li>', {
         'class': 'selected',
         'data-target': $(':selected', selectBox).val()
     }).text($(':selected', selectBox).text()));
-//    adding the caret and new select box after the original one
+    //    adding the caret and new select box after the original one
     selectBox.after(customSelect).after(caret);
-//    adding main styles to caret and the new select box
+    //    adding main styles to caret and the new select box
     caret.parent().css('position', 'relative').end().css({
         'position': 'absolute',
+        'cursor': 'pointer',
         'transition': 'all 0.2s ease-in-out',
         'top': (customSelect.outerHeight() - customSelect.height()) / 2,
         'right': '20px'
     });
-//    creating li dynamically from the options of the original select box
+    //    creating li dynamically from the options of the original select box
     selectBox.children('option').each(function () {
         var li = $('<li>', {
             'data-target': $(this).val(),
             'class': $(this)[0].hasAttribute('selected') ? 'selected' : null
         }).text($(this).text());
-//        hiding the li which just created
+        //        hiding the li which just created
         customSelect.append(li.hide());
     });
-//    Setting Styles
+    //    Setting Styles
     customSelect.before($('<style>').text(
         '#' + customSelect[0].id + '{padding: 0} #' +
             customSelect[0].id + ' li{padding:10px 0 10px 10px;cursor: pointer;} #' +
             customSelect[0].id + ' li:hover {background-image:linear-gradient(to right, #fdfdfd, #fafafa)} #' +
             customSelect[0].id + ' li.selected {background-image:linear-gradient(to bottom, #fcfcfc, #f1f1f1)}'
     ));
-//    Show the default option
+    //    Show the default option
     $('li.selected', customSelect).eq(0).show();
-//    setting the default stats on first click
+    //    setting the default stats on first click
     clickStats = {
         fullHeight: $('option', selectBox).length * $('li', customSelect).eq(1).outerHeight() + customSelect.outerHeight() - customSelect.height(),
         height: customSelect.outerHeight(),
@@ -62,7 +66,7 @@ function customSelectGenerator(selectBox, clickEvent, forms) {
             return this.fullHeight;
         }
     };
-//    toggle selected options
+    //    toggle selected options
     $('li', customSelect).on('click', function (e) {
         var t = $(e.target);
         if (!t.hasClass('selected')) {
@@ -77,16 +81,18 @@ function customSelectGenerator(selectBox, clickEvent, forms) {
             }
         }
     });
-//    main function
+    //    main function
     customSelect.add(caret).on('click', function (e) {
-        var intv,//interval declaration
-            h = clickStats.nextHeight(),//next height for the new select box
+        var intv, //interval declaration
+            h = clickStats.nextHeight(), //next height for the new select box
             i = 1,
             lis = $('li', customSelect);
         //hiding the default option
         $('li.selected').eq(0).hide();
         $('li.selected').eq(1).show();
-        customSelect.animate({'height': h}, (lis.length) * 200);
+        customSelect.animate({
+            'height': h
+        }, (lis.length) * 200);
         intv = setInterval(function () {
             if (clickStats.nextHeight() === clickStats.height) {
                 caret.css({
@@ -123,6 +129,7 @@ function customSelectGenerator(selectBox, clickEvent, forms) {
         };
     });
 }
+
 function swapForms(target) {
     'use strict';
     if (target) {
@@ -132,6 +139,7 @@ function swapForms(target) {
         XHR.onreadystatechange = function () {
             if (XHR.readyState === 4 && XHR.status === 200) {
                 $('#form-body').html(XHR.responseText);
+                $("#result").slideUp().text("");
             }
         };
     }

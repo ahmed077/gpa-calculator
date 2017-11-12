@@ -1,4 +1,5 @@
 /*global $, console, jQuery, alert*/
+/*jslint plusplus: true*/
 var grading = [
     {
         grade: "A+",
@@ -83,37 +84,23 @@ var grading = [
         gpa: 0
     }
 ];
-
 function getGpa(val) {
     'use strict';
     if (val === 100) {
-        return {
-            grade: 'A+',
-            gpa: '4'
-        };
+        return {grade: 'A+', gpa: '4'};
     } else if (val >= 93) {
-        return {
-            grade: 'A',
-            gpa: '4'
-        };
+        return {grade: 'A', gpa: '4'};
     } else if (val < 60) {
-        return {
-            grade: 'F',
-            gpa: '0'
-        };
+        return {grade: 'F', gpa: '0'};
     } else {
         var result = {};
         grading.forEach(function (grade) {
             if (val >= grade.from && val < grade.to) {
-                var cur = grading.indexOf(grade),
-                    diff = grading[cur - 1].gpa - grade.gpa,
-                    g,
-                    x;
+                var g, x,
+                    cur = grading.indexOf(grade),
+                    diff = grading[cur - 1].gpa - grade.gpa;
                 g = parseFloat((diff * ((val - grade.from) / grade.range) + grade.gpa).toPrecision(3).toString());
-                result = {
-                    grade: grade.grade,
-                    gpa: g
-                };
+                result = {grade: grade.grade, gpa: g};
                 return null;
             }
         });
@@ -129,27 +116,48 @@ function closeAlert(div) {
 }//edit
 function alertMessage(div, message, type, close) {
     'use strict';
+    close = close || null;
     div.slideUp(0).text(message).addClass('alert').addClass('alert-' + type).slideDown();
-    closeAlert(close);//this close the other message
-}//edit
-function calcPercent(current, max) {
-    "use strict";
-    var n = parseFloat(current.val()),
-        x = parseFloat(max.val()),
-        err = current.parent().siblings(".messages").children('.error'),
-        minRes = current.parent().siblings(".messages").children('.mini-result'),
-        result;
-    if (n.length === 0 || x.length === 0) {
-        alertMessage(err, "You must enter two value to calculate.", 'danger', minRes);
-        return null;
-    } else if (isNaN(n) || isNaN(x)) {
-        alertMessage(err, "Only numeric values are allowed.", 'danger', minRes);
-        return null;
-    } else if (n > x) {
-        alertMessage(err, "Your current value must be not bigger than max value.", 'danger', minRes);
-        return null;
-    } else {
-        result = getGpa((n / x) * 100);
-        alertMessage(minRes, 'Grade: ' + result.grade + ', GPA: ' + result.gpa, 'success', err);
+    if (close !== null) {
+        closeAlert(close);//this close the other message
     }
+}//edit
+function calcPercent(current, max, perc) {
+    "use strict";
+    current = current || null;
+    max = max || null;
+    var result,
+        input = max || perc,
+        err = input.parent().siblings(".messages").children('.error'),
+        minRes = input.parent().siblings(".messages").children('.mini-result');
+    perc = perc ? parseFloat(perc.val()) : (parseFloat(current.val()) / parseFloat(max.val())) * 100;
+    result = getGpa(perc);
+    alertMessage(minRes, 'Grade: ' + result.grade + ', GPA: ' + result.gpa, 'success', err);
+    return {gpa: result.gpa};
+}
+function checkNumber(input) {
+    'use strict';
+    var errMsg = "",
+        error = false,
+        val = parseFloat(input.val());
+    if (input.val() === "") {
+        errMsg = "You must enter a value to be calculated.";
+        error = true;
+    } else if (isNaN(val)) {
+        errMsg = "Only numeric values are allowed.";
+        error = true;
+    } else if (val < 0) {
+        errMsg = "Only positive values are allowed.";
+        error = true;
+    }
+    return {error: error, message: errMsg};
+}
+function sum(arr) {
+    'use strict';
+    var i,
+        result = 0;
+    for (i = 0; i < arr.length; i++) {
+        result += arr[i];
+    }
+    return result;
 }

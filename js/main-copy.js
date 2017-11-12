@@ -1,9 +1,6 @@
-/*global jQuery, console, $, alert, SelectBox, calcPercent, closeAlert*/
+/*global jQuery, console, $, alert, SelectBox, calcPercent, closeAlert, sum, alertMessage, checkNumber*/
 /*jslint plusplus:true*/
-//TODO: 
-//#1 Validation script
-//#2 Integrating calculation functions
-var addSubject, clearInput;
+var addSubject, clearInput, calcSubject;
 //functions declaration
 $(function () {
     'use strict';
@@ -35,9 +32,52 @@ $(function () {
     $('#calculate').on('click', function (e) {
         //run validation script
         e.preventDefault();
+        var x, y,
+            noErr = false,
+            gpa = [],
+            multiply = [],
+            hours = [];
+        $('#form-body > .row').not($('#form-body > .row').eq(0)).each(function () {
+            var row = $(this).children(),
+                gp = calcSubject(row),
+                h = row.children('.hour'),
+                result;
+            if (gp) {
+                result = checkNumber(h);
+                if (result.error) {
+                    alertMessage($('#result'), result.message, "danger");
+                    noErr = false;
+                    return null;
+                } else {
+                    h = parseInt(h.val(), 10);
+                    gpa.push({gpa: gp.gpa, h: h});
+                    hours.push(h);
+                    noErr = true;
+                }
+            } else {
+                alertMessage($('#result'), "Please fix errors above.", "danger");
+                noErr = false;
+                return null;
+            }
+        });
+        if (noErr) {
+            $(gpa).each(function () {
+                var c = $(this)[0];
+                multiply.push(parseFloat(c.gpa, 10) * parseInt(c.h, 10));
+            });
+            x = sum(multiply);
+            y = sum(hours);
+            alertMessage($('#result').removeClass('alert-danger'), 'Total GPA: ' + (x / y).toPrecision(3), 'success');
+        }
     });
     $("#form-body").on("click", 'div#clear', function (e) {
         clearInput($(e.target));
+    });
+    /*--------mini calculate----------*/
+    $("#form-body").on("click", 'div.mini-calculate', function () {
+        closeAlert($('#result'));
+        
+        calcSubject($(this).parent().siblings());
     });
     // SelectBox(active, Original Select Box Element, TODO at select, forms array in case of swapping)
 });
@@ -68,11 +108,37 @@ function clearInput(btn) {
     });
     closeAlert(btn.parentsUntil('.row').siblings('.messages').children());//edit
 }
-/*--------mini calculate----------*/
-$("#form-body").on("click", 'div.mini-calculate', function (e) {
+function calcSubject(elem) {
     'use strict';
-    var sibs = $(this).parent().siblings(),
-        current = sibs.children(".min"),
-        max = sibs.children(".max");
-    calcPercent(current, max);
-});
+    var current, max, err, minRes, perc, input, i,
+        x = false,
+        result = [];
+    if ($('.min').length > 0) {
+        current = elem.children(".min");
+        max = elem.children(".max");
+        result[0] = checkNumber(current);
+        result[1] = checkNumber(max);
+        result[2] = parseFloat(current.val()) > parseFloat(max.val()) ?
+                {error: true, message: "Your current value must be not bigger than max value."} :
+                {error: false};
+    } else {
+        perc = elem.children('.perc');
+        result[0] = checkNumber(perc);
+        result[1] = parseFloat(perc.val()) > 100 ? {error: true, message: "Percentage can't be higher than 100%."} : {error: false};
+    }
+    input = current || perc;
+    for (i = 0; i < result.length; i++) {
+        if (result[i].error) {
+            err = input.parent().siblings(".messages").children('.error');
+            minRes = input.parent().siblings(".messages").children('.mini-result');
+            alertMessage(err, result[i].message, 'danger', minRes);
+            x = true;
+            break;
+        }
+    }
+    if (x) {
+        return null;
+    } else {
+        return calcPercent(current, max, perc);
+    }
+}

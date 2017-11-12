@@ -7,23 +7,26 @@
     </div>
 </div>
 <hr>
-
 <div class="row">
     <div class="form-group col-xs-4">
         <input type="text" class="form-control" required placeholder="Ex: Math">
     </div>
     <div class="form-group col-xs-2">
-        <input min="0" max="9999" type="number" class="form-control" required placeholder="yours">
+        <input min="0" max="9999" type="number" class="form-control min" required placeholder="yours">
     </div>
     <div class="form-group col-xs-2">
-        <input min="50" max="9999" type="number" class="form-control" required placeholder="max">
+        <input min="50" max="9999" type="number" class="form-control max" required placeholder="max">
     </div>
     <div class="form-group col-xs-2">
-        <input type="text" class="form-control" required placeholder="Ex: 4">
+        <input type="number" class="form-control hour" required placeholder="Ex: 4">
     </div>
     <div class="col-xs-2 buttons">
-        <div class="btn btn-info pull-left"><i class="fa fa-calculator"></i></div>
+        <div class="btn btn-info pull-left mini-calculate"><i class="fa fa-calculator"></i></div>
         <div class="btn btn-warning pull-left" id="clear"><i class="fa fa-remove"></i></div>
         <div class="clearfix"></div>
+    </div>
+    <div class="messages col-xs-12">
+        <div class="error"></div>
+        <div class="mini-result"></div>
     </div>
 </div>
